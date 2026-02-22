@@ -1,4 +1,4 @@
-import { stripe } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe'
 import { sql } from '@/lib/db'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -10,6 +10,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Missing signature' }, { status: 400 })
   }
 
+  const stripe = getStripe()
   let event
   try {
     event = stripe.webhooks.constructEvent(
